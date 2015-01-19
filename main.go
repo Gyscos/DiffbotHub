@@ -31,5 +31,5 @@ func main() {
 			token,
 		})
 	})
-	http.ListenAndServe(":8888", nil)
+	log.Fatal(http.ListenAndServe(":8888", nil))
 }
