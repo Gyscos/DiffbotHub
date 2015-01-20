@@ -16,6 +16,7 @@
 			<h3>Options:</h3>
 			<input type="checkbox" checked="true" id="newtab" /> <label for="newtab">Open in a new tab</label><br>
 			<input type="checkbox" id="sourcetab" /> <label for="sourcetab">Open source page</label><br>
+			<input type="checkbox" id="localhost" /> <label for="localhost">Use localhost</label><br>
 		</div>
 		<script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
 		<script>
@@ -41,17 +42,21 @@ function callOnUrl(apiUrl) {
 		document.location = url
 }
 
-$("#analyze").click(function() {
-	callOnUrl("http://api.diffbot.com/v3/analyze?token={{.Token}}&admin&stats&url=");
+function makeApiCall(api) {
+	var apiUrl = "http://api.diffbot.com/v3/" + api + "?token={{.Token}}&admin&stats&url=";
+	if ($("#localhost").is(":checked"))
+		apiUrl = "http://localhost:8080/api/" + api + "?version=3&token={{.Token}}&admin&stats&url=";
+	callOnUrl(apiUrl);
+}
 
+$("#analyze").click(function() {
+	makeApiCall("analyze");
 });
 $("#article").click(function() {
-	callOnUrl("http://api.diffbot.com/v3/article?token={{.Token}}&admin&stats&url=");
-
+	makeApiCall("article");
 });
 $("#product").click(function() {
-	callOnUrl("http://api.diffbot.com/v3/product?token={{.Token}}&admin&stats&url=");
-
+	makeApiCall("product");
 });
 $("#render").click(function() {
 	callOnUrl("http://render.diffbot.com:14627/rendered2.html?url=");
