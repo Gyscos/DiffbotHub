@@ -2,16 +2,22 @@
 <html>
 	<head>
 		<title>Diffbot HUB</title>
+		<style>
+.actionButton {
+	padding: 5px;
+	margin-right: 10px;
+}
+		</style>
 	</head>
 
 	<body>
 		<div style="max-width: 600px; margin:auto;">
 			<center><h1>Diffbot HUB</h1></center>
-			<input placeholder="URL" style="width: 100%;margin-bottom:15px;" id="diffbotUrl" autofocus />
-			<button id="analyze">Analyze</button>
-			<button id="article">Article</button>
-			<button id="product">Product</button>
-			<button id="render">Render</button>
+			<input placeholder="URL" style="width: 100%;margin-bottom:15px;" id="diffbotUrl" autofocus type="text" />
+			<button id="analyze" class="actionButton">Analyze</button>
+			<button id="article" class="actionButton">Article</button>
+			<button id="product" class="actionButton">Product</button>
+			<button id="render" class="actionButton">Render</button>
 			<input placeholder="Extra fields (mentos, ...)" style="width: 100%;margin-top:15px;margin-bottom:15px;" id="extrafields" />
 			<h3>Options:</h3>
 			<input type="checkbox" checked="true" id="newtab" /> <label for="newtab">Open in a new tab</label><br>
@@ -24,6 +30,10 @@
 function callOnUrl(apiUrl) {
 
 	var v = $("#diffbotUrl").val();
+	if (!v.match(/^https?:\/\//)) {
+		v = "http://" + v;
+	}
+
 	var encodedSource = encodeURIComponent(v);
 
 	var url = apiUrl + encodedSource;
