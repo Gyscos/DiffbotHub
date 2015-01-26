@@ -29,10 +29,13 @@
 
 function callOnUrl(apiUrl) {
 
+
 	var v = $("#diffbotUrl").val();
 	if (!v.match(/^https?:\/\//)) {
 		v = "http://" + v;
 	}
+
+	$.get("/save", {"url":v});
 
 	var encodedSource = encodeURIComponent(v);
 
