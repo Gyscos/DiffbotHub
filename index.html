@@ -17,12 +17,14 @@
 			<button id="analyze" class="actionButton">Analyze</button>
 			<button id="article" class="actionButton">Article</button>
 			<button id="product" class="actionButton">Product</button>
+			<button id="discussion" class="actionButton">Discussion</button>
 			<button id="render" class="actionButton">Render</button>
 			<input placeholder="Extra fields (mentos, ...)" style="width: 100%;margin-top:15px;margin-bottom:15px;" id="extrafields" />
 			<h3>Options:</h3>
 			<input type="checkbox" checked="true" id="newtab" /> <label for="newtab">Open in a new tab</label><br>
 			<input type="checkbox" id="sourcetab" /> <label for="sourcetab">Open source page</label><br>
-			<input type="checkbox" id="localhost" /> <label for="localhost">Use localhost</label><br>
+			<input type="checkbox" id="customhost" /> <label for="customhost">Use custom server</label>
+			<input id="host" type="text" style="margin-left:50px;" value="localhost" /><br>
 		</div>
 		<script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
 		<script>
@@ -57,8 +59,8 @@ function callOnUrl(apiUrl, logLabel) {
 
 function makeApiCall(api) {
 	var apiUrl = "http://api.diffbot.com/v3/" + api + "?token={{.Token}}&admin&stats&url=";
-	if ($("#localhost").is(":checked"))
-		apiUrl = "http://localhost:8080/api/" + api + "?version=3&token={{.Token}}&admin&stats&url=";
+	if ($("#customhost").is(":checked"))
+		apiUrl = "http://" + $("#host").val() + ":8080/api/" + api + "?version=3&token={{.Token}}&admin&stats&url=";
 	callOnUrl(apiUrl, api);
 }
 
@@ -70,6 +72,9 @@ $("#article").click(function() {
 });
 $("#product").click(function() {
 	makeApiCall("product");
+});
+$("#discussion").click(function() {
+	makeApiCall("discussion");
 });
 $("#render").click(function() {
 	callOnUrl("http://render.diffbot.com:14627/rendered2.html?url=", "render");
